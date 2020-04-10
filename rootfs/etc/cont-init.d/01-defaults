@@ -1,0 +1,23 @@
+#!/usr/bin/with-contenv bash
+
+# see if user has mounted volume to config
+if [ ! -f /config/nginx.conf ];  then
+  cp /etc/nginx/nginx.conf /config/nginx.conf
+  chown nginx:www-data /config/nginx.conf
+fi
+
+if [ ! -d /run/nginx ]; then
+  mkdir /run/nginx
+  chown nginx:www-data /run/nginx
+fi
+
+if [ -n "${TZ}" ]; then
+  zone="/usr/share/zoneinfo/${TZ}"
+  if [ -f $zone ]; then
+    echo "Setting timezone to ${TZ}"
+    cp $zone /etc/localtime
+    echo $TZ > /etc/Timezone
+  fi
+fi
+
+alias ll='ls -lah'

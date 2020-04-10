@@ -1,0 +1,24 @@
+#!/usr/bin/with-contenv sh
+
+echo '
+-------------------------------------
+Adjusting UID and GID of nginx
+-------------------------------------'
+PUID=${PUID:-1000}
+PGID=${PGID:-1000}
+
+groupmod -o -g "$PGID" www-data
+usermod -o -u "$PUID" -g "$PGID" nginx
+
+echo '
+-------------------------------------
+GID/UID
+-------------------------------------'
+echo "
+User uid:    $(id -u nginx)
+User gid:    $(id -g nginx)
+-------------------------------------
+"
+
+chown -R nginx:www-data /etc/nginx
+chown -R nginx:www-data /config
