@@ -1,6 +1,6 @@
 FROM alpine:3.11
 
-MAINTAINER Dmitry Jerusalimsky <dimaj@dimaj.net>
+MAINTAINER Ilia S <solohin.i@gmail.com>
 
 # Download s6
 RUN apk add --no-cache curl\
