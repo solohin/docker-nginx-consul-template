@@ -15,5 +15,5 @@ TODO:
 - Set consul server as a ENV variable
 - Add consul-template to s6
 - Use templates instead of config
-- Reload nginx after config update
++ Reload nginx after config update
 - Add SSL certificate support

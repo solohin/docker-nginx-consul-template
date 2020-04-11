@@ -11,16 +11,15 @@ RUN apk add --no-cache curl\
 # if there are any errors during user scripts, terminate
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
-COPY rootfs /
-
 # Install nginx and shadow
 RUN echo "http://dl-4.alpinelinux.org/alpine/v3.6/main" >> /etc/apk/repositories && \
     echo "http://dl-4.alpinelinux.org/alpine/v3.6/community/" >> /etc/apk/repositories && \
-    apk add --update nginx shadow bash tzdata && \
+    apk add --update nginx gettext bash tzdata && \
     rm -rf /var/cache/apk/* && \
     chown -R nginx:www-data /var/lib/nginx
 
 VOLUME /config
+
 
 # install consul-template
 ENV CONSUL_TEMPLATE_VERSION 0.24.1
@@ -30,6 +29,8 @@ RUN unzip /tmp/consul-template.zip -d /usr/bin && \
     chmod +x /usr/bin/consul-template && \
     rm /tmp/consul-template.zip
 
+ENV CONSUL_URL=localhost:8500
+COPY rootfs /
 
 EXPOSE 80 443
 

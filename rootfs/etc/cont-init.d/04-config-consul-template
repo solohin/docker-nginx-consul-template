@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv bash
+
+envsubst < "/etc/consul-template.d/consul-template.hcl.template" > "/etc/consul-template.d/consul-template.hcl"

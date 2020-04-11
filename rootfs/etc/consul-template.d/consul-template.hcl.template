@@ -1,5 +1,5 @@
 consul {
-    address = "localhost:8500"
+    address = "${CONSUL_URL}"
     retry {
         enabled = true
         attempts = 12
@@ -10,5 +10,5 @@ template {
     source      = "/etc/nginx/conf.d/load-balancer.conf.ctmpl"
     destination = "/etc/nginx/conf.d/load-balancer.conf"
     perms = 0600
-    command = "service nginx reload"
+    command = "s6-svc -h /var/run/s6/services/nginx/"
 }
