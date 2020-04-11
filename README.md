@@ -3,10 +3,10 @@ Runs consul-template and nginx in a single container. Reloads nginx automaticall
 example usage:
 
 ```
-docker run -it --name nginx-consul-template \
-    -v $(pwd)/templates:/templates \
-    -v $(pwd)/ssl:/ssl \
-    solohin/docker-nginx-consul-template
+docker run -it --name nginx \
+    -v $$(pwd)/config/services.ctmpl:/config/services.ctmpl \
+    -e CONSUL_URL="dev-consul:8500" \
+    --link dev-consul -p 80:80 quay.io/solohin_i/docker-nginx-consul-template
 ```
 
 
