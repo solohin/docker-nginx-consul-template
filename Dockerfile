@@ -20,8 +20,16 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/v3.6/main" >> /etc/apk/repositories
     rm -rf /var/cache/apk/* && \
     chown -R nginx:www-data /var/lib/nginx
 
-
 VOLUME /config
+
+# install consul-template
+ENV CONSUL_TEMPLATE_VERSION 0.24.1
+ADD https://releases.hashicorp.com/consul-template/${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip /tmp/consul-template.zip
+
+RUN unzip /tmp/consul-template.zip -d /usr/bin && \
+    chmod +x /usr/bin/consul-template && \
+    rm /tmp/consul-template.zip
+
 
 EXPOSE 80 443
 
