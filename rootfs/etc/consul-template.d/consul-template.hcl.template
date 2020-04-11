@@ -7,8 +7,8 @@ consul {
     }
 }
 template {
-    source      = "/etc/nginx/conf.d/load-balancer.conf.ctmpl"
-    destination = "/etc/nginx/conf.d/load-balancer.conf"
+    source      = "/config/services.ctmpl"
+    destination = "/etc/nginx/conf.d/services.conf"
     perms = 0600
     command = "s6-svc -h /var/run/s6/services/nginx/"
 }

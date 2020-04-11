@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.11
 
 MAINTAINER Dmitry Jerusalimsky <dimaj@dimaj.net>
 
@@ -12,22 +12,24 @@ RUN apk add --no-cache curl\
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
 # Install nginx and shadow
-RUN echo "http://dl-4.alpinelinux.org/alpine/v3.6/main" >> /etc/apk/repositories && \
-    echo "http://dl-4.alpinelinux.org/alpine/v3.6/community/" >> /etc/apk/repositories && \
-    apk add --update nginx gettext bash tzdata && \
+RUN echo "http://dl-4.alpinelinux.org/alpine/v3.11/main" >> /etc/apk/repositories && \
+    echo "http://dl-4.alpinelinux.org/alpine/v3.11/community/" >> /etc/apk/repositories && \
+    apk add --update nginx gettext bash shadow tzdata shadow && \
     rm -rf /var/cache/apk/* && \
     chown -R nginx:www-data /var/lib/nginx
 
-VOLUME /config
-
+# remove default website
+RUN rm /etc/nginx/conf.d/default.conf
 
 # install consul-template
 ENV CONSUL_TEMPLATE_VERSION 0.24.1
-ADD https://releases.hashicorp.com/consul-template/${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip /tmp/consul-template.zip
 
-RUN unzip /tmp/consul-template.zip -d /usr/bin && \
+RUN apk add --no-cache curl &&\
+    curl https://releases.hashicorp.com/consul-template/${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip --output /tmp/consul-template.zip && \
+    unzip /tmp/consul-template.zip -d /usr/bin && \
     chmod +x /usr/bin/consul-template && \
-    rm /tmp/consul-template.zip
+    rm /tmp/consul-template.zip && \
+    apk del --no-cache curl
 
 ENV CONSUL_URL=localhost:8500
 COPY rootfs /

@@ -1,10 +1,10 @@
 #!/usr/bin/with-contenv bash
 
 # see if user has mounted volume to config
-if [ ! -f /config/nginx.conf ];  then
-  cp /etc/nginx/nginx.conf /config/nginx.conf
-  chown nginx:www-data /config/nginx.conf
-fi
+# if [ ! -f /config/nginx.conf ];  then
+#   cp /etc/nginx/nginx.conf /config/nginx.conf
+#   chown nginx:www-data /config/nginx.conf
+# fi
 
 if [ ! -d /run/nginx ]; then
   mkdir /run/nginx
@@ -20,4 +20,4 @@ if [ -n "${TZ}" ]; then
   fi
 fi
 
-alias ll='ls -lah'
+# alias ll='ls -lah'

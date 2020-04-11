@@ -13,7 +13,7 @@ upstream {{ .Name }}.service {
 
 server {
    listen 80;
-   hostname _;
+   #hostname _;
 
 {{ range services }}
 
