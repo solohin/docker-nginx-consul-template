@@ -31,7 +31,7 @@ RUN apk add --no-cache curl &&\
     rm /tmp/consul-template.zip && \
     apk del --no-cache curl
 
-ENV CONSUL_URL=localhost:8500
+ENV CONSUL_URL=consul:8500
 COPY rootfs /
 
 EXPOSE 80 443
